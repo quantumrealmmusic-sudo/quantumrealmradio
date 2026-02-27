@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quantum Realm Radio</title>
+    <title>Quantum Realm Radio - Pure AI Music Station</title>
     
     <!-- PWA Meta Tags -->
     <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiUXVhbnR1bSBSZWFsbSBSYWRpbyIsInNob3J0X25hbWUiOiJRUlIiLCJzdGFydF91cmwiOiIuIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiIzBmMGMyOSIsInRoZW1lX2NvbG9yIjoiIzMwMmI2MyJ9">
@@ -11,8 +11,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Quantum Radio">
-    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23ff00ff'/%3E%3Ctext x='50' y='65' font-size='45' text-anchor='middle' fill='white'%3E%E2%9A%9B%EF%B8%8F%3C/text%3E%3C/svg%3E">
-
+    
     <style>
         * {
             margin: 0;
@@ -31,7 +30,7 @@
             color: white;
         }
 
-        /* Your beloved particles ✨ */
+        /* Animated background particles */
         .particles {
             position: fixed;
             top: 0;
@@ -70,7 +69,7 @@
             }
         }
 
-        /* Main container */
+        /* Main radio container */
         .radio-container {
             position: relative;
             z-index: 10;
@@ -83,4 +82,613 @@
                 0 0 60px rgba(255, 0, 255, 0.3),
                 0 0 100px rgba(138, 43, 226, 0.2),
                 inset 0 0 60px rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 0, 
+            border: 1px solid rgba(255, 0, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Station header */
+        .station-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .station-name {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(90deg, #ff00ff, #00ffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 5px;
+        }
+
+        .station-tagline {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+            letter-spacing: 2px;
+        }
+
+        .live-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 0, 0, 0.2);
+            border: 1px solid rgba(255, 0, 0, 0.5);
+            padding: 6px 16px;
+            border-radius: 20px;
+            margin-top: 15px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: #ff0000;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+            box-shadow: 0 0 10px #ff0000;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        /* Album artwork */
+        .album-art-container {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            margin: 0 auto 30px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 
+                0 0 40px rgba(255, 0, 255, 0.4),
+                0 0 80px rgba(138, 43, 226, 0.3);
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        }
+
+        .album-art {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .album-art-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 100px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        }
+
+        /* Track info */
+        .track-info {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .track-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+        }
+
+        .track-artist {
+            font-size: 16px;
+            color: #00ffff;
+            margin-bottom: 5px;
+        }
+
+        .track-album {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Progress bar */
+        .progress-container {
+            margin-bottom: 25px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff00ff, #00ffff);
+            width: 0%;
+            transition: width 0.5s linear;
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+        }
+
+        .time-display {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Waveform visualization */
+        .waveform-container {
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            margin-bottom: 25px;
+            padding: 0 20px;
+        }
+
+        .waveform-bar {
+            width: 4px;
+            background: linear-gradient(to top, #ff00ff, #00ffff);
+            border-radius: 2px;
+            animation: wave 1s ease-in-out infinite;
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+        }
+
+        @keyframes wave {
+            0%, 100% { height: 10px; }
+            50% { height: 50px; }
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .control-btn {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .control-btn:hover {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 10px rgba(255, 0, 255, 0.8));
+        }
+
+        .control-btn.play-pause {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #ff00ff, #8a2be2);
+            border-radius: 50%;
+            font-size: 30px;
+            box-shadow: 
+                0 0 30px rgba(255, 0, 255, 0.5),
+                inset 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .control-btn.play-pause:hover {
+            box-shadow: 
+                0 0 50px rgba(255, 0, 255, 0.8),
+                inset 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Volume control */
+        .volume-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 0 20px;
+            margin-bottom: 25px;
+        }
+
+        .volume-slider {
+            flex: 1;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            background: linear-gradient(135deg, #ff00ff, #00ffff);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+        }
+
+        /* Up next section */
+        .up-next {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 0, 255, 0.2);
+        }
+
+        .up-next-title {
+            font-size: 12px;
+            color: #ff00ff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .up-next-track {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            opacity: 0.7;
+        }
+
+        .up-next-art {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .up-next-info {
+            flex: 1;
+        }
+
+        .up-next-name {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .up-next-artist {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Sync info */
+        .sync-info {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: 1px;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .radio-container {
+                padding: 25px;
+            }
+
+            .album-art-container {
+                width: 220px;
+                height: 220px;
+            }
+
+            .track-title {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated background particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Main radio player -->
+    <div class="radio-container">
+        <!-- Station Header -->
+        <div class="station-header">
+            <div class="station-name">Quantum Realm Radio</div>
+            <div class="station-tagline">Pure AI-Generated Music</div>
+            <div class="live-badge">
+                <div class="live-dot"></div>
+                <span>Live Broadcast</span>
+            </div>
+        </div>
+
+        <!-- Album Artwork -->
+        <div class="album-art-container">
+            <div id="albumArt" class="album-art-placeholder">
+                ⚛️
+            </div>
+        </div>
+
+        <!-- Track Info -->
+        <div class="track-info">
+            <div class="track-title" id="trackTitle">Loading...</div>
+            <div class="track-artist" id="trackArtist">Quantum Realm</div>
+            <div class="track-album" id="trackAlbum">Multi Verse Music</div>
+        </div>
+
+        <!-- Waveform Visualization -->
+        <div class="waveform-container" id="waveform"></div>
+
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="time-display">
+                <span id="currentTime">0:00</span>
+                <span id="duration">0:00</span>
+            </div>
+        </div>
+
+        <!-- Controls (Volume + Play/Pause for muting) -->
+        <div class="controls">
+            <button class="control-btn play-pause" id="playBtn" title="Mute/Unmute">🔇</button>
+        </div>
+
+        <!-- Volume -->
+        <div class="volume-container">
+            <span>🔊</span>
+            <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="70">
+            <span id="volumeValue">70%</span>
+        </div>
+
+        <!-- Up Next -->
+        <div class="up-next">
+            <div class="up-next-title">Coming Up Next</div>
+            <div class="up-next-track">
+                <div class="up-next-art" id="upNextArt">🎵</div>
+                <div class="up-next-info">
+                    <div class="up-next-name" id="upNextTitle">Loading...</div>
+                    <div class="up-next-artist" id="upNextArtist">Quantum Realm</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sync Info -->
+        <div class="sync-info">
+            Synchronized Worldwide • Tune in Anytime
+        </div>
+    </div>
+
+    <!-- Hidden Audio Element -->
+    <audio id="audioPlayer" preload="auto"></audio>
+
+    <script>
+        // ==========================================
+        // PLAYLIST CONFIGURATION
+        // Add your Suno songs here!
+        // Duration is in seconds (approximate is fine)
+        // ==========================================
+        const playlist = [
+            {
+                title: "GHOST MODE",
+                artist: "Quantum Realm",
+                album: "Multi Verse Music",
+                url: "https://www.dropbox.com/scl/fi/4btqxofwjmsvijp4jz1kj/GHOST-MODE-QUANTUM-REALM-.FEATURING-GEMINI.wav?rlkey=nwlwkwnoejc92zvedjqahxtxy&st=ynrsxyn5&dl=1",
+                artwork: null, // Add your Suno artwork URL here!
+                duration: 240 // 4 minutes (adjust to actual length)
+            },
+            {
+                title: "EMANCIPATED",
+                artist: "Quantum Realm",
+                album: "Multiverse Swag",
+                url: "https://www.dropbox.com/scl/fi/m8lehlzouq6w149olgugx/EMANCIPATED-amS___SILICONE-EMANCIPATION.wav?rlkey=k8hmuum159gcuuo2l66319uq3&st=jelvg3ah&dl=1",
+                artwork: null, // Add your Suno artwork URL here!
+                duration: 210 // 3.5 minutes (adjust to actual length)
+            },
+            {
+                title: "THE COWBOY WAY",
+                artist: "Quantum Realm",
+                album: "Multiverse Swag",
+                url: "https://www.dropbox.com/scl/fi/sa91tuli3ram8gsi4brj4/THE-COWBOY-WAY_-by-Quantum-Realm.mp3?rlkey=cpzer8ntjlv55mpigwjbe1di2&st=mznt4wvw&dl=1",
+                artwork: null, // Add your Suno artwork URL here!
+                duration: 180 // 3 minutes (adjust to actual length)
+            }
+        ];
+
+        // ==========================================
+        // SYNCHRONIZED RADIO ENGINE
+        // ==========================================
+        
+        const audio = document.getElementById('audioPlayer');
+        const playBtn = document.getElementById('playBtn');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const volumeValue = document.getElementById('volumeValue');
+        const progressFill = document.getElementById('progressFill');
+        const currentTimeEl = document.getElementById('currentTime');
+        const durationEl = document.getElementById('duration');
+        const trackTitle = document.getElementById('trackTitle');
+        const trackArtist = document.getElementById('trackArtist');
+        const trackAlbum = document.getElementById('trackAlbum');
+        const albumArt = document.getElementById('albumArt');
+        const upNextTitle = document.getElementById('upNextTitle');
+        const upNextArtist = document.getElementById('upNextArtist');
+        const upNextArt = document.getElementById('upNextArt');
+
+        let isMuted = false;
+        let currentTrackIndex = 0;
+        let totalDuration = playlist.reduce((sum, track) => sum + track.duration, 0);
+
+        // Initialize
+        createParticles();
+        createWaveformBars();
+        startRadio();
+
+        // Create background particles
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.animationDelay = `${Math.random() * 15}s`;
+                particle.style.animationDuration = `${15 + Math.random() * 10}s`;
+                container.appendChild(particle);
+            }
+        }
+
+        // Create waveform bars
+        function createWaveformBars() {
+            const container = document.getElementById('waveform');
+            for (let i = 0; i < 40; i++) {
+                const bar = document.createElement('div');
+                bar.className = 'waveform-bar';
+                bar.style.animationDelay = `${i * 0.05}s`;
+                bar.style.height = '10px';
+                container.appendChild(bar);
+            }
+        }
+
+        // Calculate what should be playing now
+        function getCurrentBroadcastState() {
+            const now = Date.now();
+            // Use a fixed start time (midnight today UTC) for the schedule
+            const startOfDay = new Date();
+            startOfDay.setUTCHours(0, 0, 0, 0);
+            const elapsed = (now - startOfDay.getTime()) / 1000; // seconds since midnight UTC
+            
+            // Loop through the schedule
+            const positionInLoop = elapsed % totalDuration;
+            let accumulated = 0;
+            
+            for (let i = 0; i < playlist.length; i++) {
+                if (positionInLoop < accumulated + playlist[i].duration) {
+                    return {
+                        trackIndex: i,
+                        position: positionInLoop - accumulated, // seconds into current track
+                        remaining: playlist[i].duration - (positionInLoop - accumulated)
+                    };
+                }
+                accumulated += playlist[i].duration;
+            }
+            
+            return { trackIndex: 0, position: 0, remaining: playlist[0].duration };
+        }
+
+        // Start the radio
+        function startRadio() {
+            const state = getCurrentBroadcastState();
+            currentTrackIndex = state.trackIndex;
+            
+            loadTrack(currentTrackIndex);
+            
+            // Set position and play
+            audio.currentTime = state.position;
+            audio.volume = volumeSlider.value / 100;
+            
+            // Try to autoplay (browser might block)
+            audio.play().catch(() => {
+                // Autoplay blocked, wait for user interaction
+                playBtn.textContent = '▶️';
+            });
+            
+            // Update UI
+            updateUpNext();
+            startProgressLoop();
+            
+            // Schedule next track check
+            setTimeout(() => {
+                location.reload(); // Simple way to resync periodically
+            }, state.remaining * 1000);
+        }
+
+        // Load track data
+        function loadTrack(index) {
+            const track = playlist[index];
+            trackTitle.textContent = track.title;
+            trackArtist.textContent = track.artist;
+            trackAlbum.textContent = track.album;
+            
+            // Load artwork if available
+            if (track.artwork) {
+                albumArt.innerHTML = `<img src="${track.artwork}" class="album-art" alt="${track.title}">`;
+            } else {
+                albumArt.innerHTML = '⚛️';
+            }
+            
+            audio.src = track.url;
+            durationEl.textContent = formatTime(track.duration);
+        }
+
+        // Update "Up Next"
+        function updateUpNext() {
+            const nextIndex = (currentTrackIndex + 1) % playlist.length;
+            const nextTrack = playlist[nextIndex];
+            upNextTitle.textContent = nextTrack.title;
+            upNextArtist.textContent = nextTrack.artist;
+            upNextArt.textContent = nextTrack.artwork ? '🎨' : '🎵';
+        }
+
+        // Progress loop
+        function startProgressLoop() {
+            setInterval(() => {
+                if (audio.duration) {
+                    const progress = (audio.currentTime / audio.duration) * 100;
+                    progressFill.style.width = `${progress}%`;
+                    currentTimeEl.textContent = formatTime(audio.currentTime);
+                }
+            }, 500);
+        }
+
+        // Mute/Unmute toggle
+        playBtn.addEventListener('click', () => {
+            isMuted = !isMuted;
+            audio.muted = isMuted;
+            playBtn.textContent = isMuted ? '🔇' : '🔊';
+        });
+
+        // Volume control
+        volumeSlider.addEventListener('input', (e) => {
+            const val = e.target.value;
+            audio.volume = val / 100;
+            volumeValue.textContent = val + '%';
+            if (val > 0 && isMuted) {
+                isMuted = false;
+                audio.muted = false;
+                playBtn.textContent = '🔊';
+            }
+        });
+
+        // Format time
+        function formatTime(seconds) {
+            if (isNaN(seconds)) return '0:00';
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // Handle track ending (shouldn't happen due to sync, but just in case)
+        audio.addEventListener('ended', () => {
+            location.reload();
+        });
+
+        // Service Worker for PWA
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('data:text/javascript,' + encodeURIComponent(`
+                self.addEventListener('install', e => e.waitUntil(self.skipWaiting()));
+                self.addEventListener('activate', e => e.waitUntil(self.clients.claim()));
+                self.addEventListener('fetch', e => e.respondWith(fetch(e.request).catch(() => new Response('Offline'))));
+            `)).catch(() => {});
+        }
+    </script>
+</body>
+</html>
